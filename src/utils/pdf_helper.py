@@ -17,10 +17,27 @@ from typing import List, Dict, Any, Optional
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Auto-configure Poppler path for Windows
+# Auto-configure Poppler path
 def _setup_poppler_path():
-    """Automatically add Poppler to PATH if found in common locations"""
-    if os.name == 'nt':  # Windows only
+    """
+    Configure Poppler path with the following priority:
+    1. POPPLER_PATH environment variable (if set)
+    2. Auto-detection in common locations (Windows only)
+    3. System PATH (default for Linux/Mac)
+    """
+    # Check if user specified custom path via environment variable
+    custom_poppler_path = os.getenv('POPPLER_PATH')
+    if custom_poppler_path:
+        if os.path.exists(custom_poppler_path):
+            if custom_poppler_path not in os.environ['PATH']:
+                os.environ['PATH'] = custom_poppler_path + os.pathsep + os.environ['PATH']
+                logger.info(f"✅ Using custom Poppler path from POPPLER_PATH: {custom_poppler_path}")
+            return True
+        else:
+            logger.warning(f"⚠️  POPPLER_PATH is set but directory doesn't exist: {custom_poppler_path}")
+    
+    # Windows: Try to auto-detect in common installation locations
+    if os.name == 'nt':
         common_paths = [
             r"C:\Program Files\poppler-25.07.0\Library\bin",
             r"C:\Program Files\poppler\Library\bin",
@@ -32,12 +49,16 @@ def _setup_poppler_path():
             if os.path.exists(poppler_path):
                 if poppler_path not in os.environ['PATH']:
                     os.environ['PATH'] = poppler_path + os.pathsep + os.environ['PATH']
-                    logger.info(f"✅ Added Poppler to PATH: {poppler_path}")
+                    logger.info(f"✅ Auto-detected Poppler at: {poppler_path}")
                 return True
         
-        logger.warning("⚠️  Poppler not found in common locations. PDF conversion may fail.")
-        logger.warning("   Install from: https://github.com/oschwartz10612/poppler-windows/releases/")
+        logger.warning("⚠️  Poppler not found in common Windows locations.")
+        logger.warning("   Option 1: Install from https://github.com/oschwartz10612/poppler-windows/releases/")
+        logger.warning("   Option 2: Set POPPLER_PATH in .env file to your Poppler bin directory")
         return False
+    
+    # Linux/Mac: Assume Poppler is in system PATH (installed via package manager)
+    # No action needed - pdf2image will use system PATH
     return True
 
 # Run setup on module import

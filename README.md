@@ -8,6 +8,8 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 
+Ever had to review 150 resumes while desperately needing a bathroom break? Yeah, me too. That's why I built Talent Trawler - so you can process resumes at machine speed and actually enjoy your evening with a glass of wine.
+
 **AI-powered resume screening that processes hundreds of CVs in minutes, not days.**
 
 Talent Trawler uses Claude's vision model to read PDF resumes directly and extract structured data based on your custom criteria. Perfect for recruiters, hiring managers, and HR teams drowning in applications.
@@ -32,6 +34,7 @@ Talent Trawler uses Claude's vision model to read PDF resumes directly and extra
 - Download: https://github.com/oschwartz10612/poppler-windows/releases/
 - Extract to `C:\Program Files\poppler-XX.XX.X\`
 - System auto-detects common installation paths
+- **Custom location?** Set `POPPLER_PATH` in `.env` (see step 3)
 
 **Mac:**
 ```bash
@@ -46,6 +49,8 @@ sudo apt-get install poppler-utils
 # Fedora
 sudo dnf install poppler-utils
 ```
+
+**Note:** Linux/Mac users typically don't need additional configuration as Poppler is auto-detected from system PATH.
 
 ### 2. Setup
 
@@ -79,6 +84,9 @@ Copy `.env.example` to `.env` and add your API key:
 ```
 ANTHROPIC_API_KEY=your_api_key_here
 ANTHROPIC_MODEL=claude-sonnet-4-5-20250929
+
+# Optional: Only if Poppler is in a custom location
+# POPPLER_PATH=C:\Program Files\poppler-24.08.0\Library\bin
 ```
 
 ### 4. Create Configuration
@@ -208,8 +216,10 @@ The system provides detailed logging:
 - Check file extensions (.pdf or .PDF)
 
 **"Failed to convert PDF to images"**
-- Verify Poppler is installed and in PATH
-- Check PDF is not corrupted
+- Verify Poppler is installed correctly
+- **Windows:** Check if auto-detection found Poppler (look for log message)
+- **Custom installation:** Set `POPPLER_PATH` in `.env` to your Poppler bin directory
+- Check PDF is not corrupted or password-protected
 
 **"API error"**
 - Verify ANTHROPIC_API_KEY in .env
