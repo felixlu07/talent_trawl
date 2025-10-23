@@ -1,0 +1,3 @@
+AI-powered resume screening system that processes hundreds of CVs in minutes using Claude's vision model. Extract structured data, score candidates, and export to CSV - all with configurable criteria. Perfect for recruiters and hiring managers.
+
+Topics: ai, resume-screening, recruitment, hr-tech, claude, anthropic, vision-ai, pdf-processing, batch-processing, hiring-automation
