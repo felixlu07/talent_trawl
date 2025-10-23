@@ -1,0 +1,13 @@
+# Talent Trawler Dependencies
+
+# Core dependencies
+anthropic>=0.40.0
+python-dotenv==1.0.0
+
+# PDF processing
+pdf2image==1.17.0
+Pillow==10.4.0
+
+# Note: pdf2image requires poppler to be installed on your system
+# Windows: Download from https://github.com/oschwartz10612/poppler-windows/releases/
+# Extract and add the bin/ folder to your system PATH

@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+*.pyc
+src/__pycache__/
+src/utils/__pycache__/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# Output files
+results_*.csv
+results_*.json
+resume_trawl_*.csv
+resume_trawl_*.json
+
+# Test data and sample resumes
+test_*/
+example_*/
+sample_*/
+pm_candidates/
+*_candidates/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+
+# Environment files (contains API keys)
+.env
+
+# Archive folder for sample resumes (not committed to repository)
+.archived/
+archived/
